@@ -187,7 +187,9 @@ p = Pool(30)
 
 samples=[] #list(np.loadtxt('mysamples'))
 
-while (len(samples)<500):
+#Uses a pool of 30 processes to run in parallel.
+#Run until we have found at least 400 samples.
+while (len(samples)<400):
 	#logLstar,logPhiStar,alpha
 	#Define the prior ranges:
 	prior_samples=np.array(zip(np.random.random(size=Nsamp)*2+9.5,np.random.random(size=Nsamp)*2.5-5,np.random.random(size=Nsamp)*2.-.9 ))
