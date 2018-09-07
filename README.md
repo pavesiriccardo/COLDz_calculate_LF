@@ -8,6 +8,6 @@ This code uses the line candidates selected by MF3D (see repo), their measured l
 
 In cand_class.py we define the class of line candidates, initializing an instance of this class extracts all the appropriate, derived properties and stores them as attributes.
 
-In ABC_COSMOS.py we use the ABC method (Approximate Bayesian Computation) to sample the probability distribution for the Luminosity function distribution Schechter parameters, accounting for the different sources of systematic uncertainty introduced by the measurement.
+In ABC_COSMOS.py we use the [ABC method](https://en.wikipedia.org/wiki/Approximate_Bayesian_computation) to sample the probability distribution for the Luminosity function distribution Schechter parameters, accounting for the different sources of systematic uncertainty introduced by the measurement.
 
 In plot_distribution.py we plot the derived probabilistic constraints on the Luminosity function.
