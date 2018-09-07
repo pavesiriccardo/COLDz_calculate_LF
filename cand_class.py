@@ -1,5 +1,14 @@
 import numpy as np,cPickle
 
+
+path_aperture_measures='/data2/common/COdeep_cosmos/MFanalysis/spectra_nosmooth_pos.txt'
+path_singlepixel_measures='/data2/common/COdeep_cosmos/MFanalysis/spectra_nosmooth_1pix_pos.txt'
+path_posterior_size='/data2/common/COdeep_cosmos/artificial/no_smooth/post_size_881002.dat'
+path_posterior_linewdith='/data2/common/COdeep_cosmos/artificial/no_smooth/post_FWHM_343333.dat'
+path_completness_params='completeness_params.npy'
+path_signal_cube='/data2/common/COdeep_cosmos/singlepointings/NewCOSMOS20.fits'
+
+
 class line_candidate(object):
 	def dist3d(self,pos1,pos2):
 		'''
@@ -28,7 +37,7 @@ class line_candidate(object):
 		self.freq_templ=reduint_entry[3][1]
 		self.reduint_entry=reduint_entry
 		#Finds the measured aperture-extracted properties.
-		inp=open('/data2/common/COdeep_cosmos/MFanalysis/spectra_nosmooth_pos.txt')
+		inp=open(path_aperture_measures)
 		for idx,line in enumerate(inp):
 			splitt=line.split()
 			if float(splitt[0][1:-1])==self.SNR:
@@ -50,7 +59,7 @@ class line_candidate(object):
 				break
 		inp.close()
 		#Finds the measured single-pixel-extracted properties.
-		inp=open('/data2/common/COdeep_cosmos/MFanalysis/spectra_nosmooth_1pix_pos.txt')
+		inp=open(path_singlepixel_measures)
 		for idx,line in enumerate(inp):
 			splitt=line.split()
 			if float(splitt[0][1:-1])==self.SNR:
@@ -74,13 +83,13 @@ class line_candidate(object):
 			self.assign_purity()
 		#Assigns the appropriate flux-factor distribution function, utilizing the size probability distribution.
 		self.assign_flux_corr()
-		inp=open('/data2/common/COdeep_cosmos/artificial/no_smooth/post_size_881002.dat')
+		inp=open(path_posterior_size)
 		posterior=cPickle.load(inp)
 		inp.close()
 		SNRbins=np.arange(4,7,.1)
 		SNRbin_idx=np.digitize(self.SNR,SNRbins)-1
 		self.size_prob=np.array([np.mean(posterior[self.spat_templ][inj_size][(SNRbin_idx-3):(SNRbin_idx+3)]) for inj_size in range(3)])
-		inp=open('/data2/common/COdeep_cosmos/artificial/no_smooth/post_FWHM_343333.dat')
+		inp=open(path_posterior_linewdith)
 		posterior_freq=cPickle.load(inp)
 		inp.close()
 		self.FWHM_prob=np.array([np.mean(posterior_freq[self.freq_templ][inj_FWHM][(SNRbin_idx-3):(SNRbin_idx+3)]) for inj_FWHM in range(3)])
@@ -126,7 +135,7 @@ class line_candidate(object):
 		if np.isnan(flux_to_use):
 			return np.nan
 		myfit=lambda f,d,f0: max(0,1-(   1./(f+d)*np.exp(-f/f0)   ))
-		compl_params_fit=np.load('completeness_params.npy') 
+		compl_params_fit=np.load(path_completness_params) 
 		comple=0
 		for spat_bin in [0,1,2]:
 			for freq_bin in [0,1,2]:
@@ -157,11 +166,11 @@ class line_candidate(object):
 			Coordinates within the data cube
 
 		Returns
-		
+
 		Ndarray with the RA,Dec, and frequency in Hz
 		'''
 		import pyfits,pywcs
-		f=pyfits.open('/data2/common/COdeep_cosmos/singlepointings/NewCOSMOS20.fits')
+		f=pyfits.open(path_signal_cube)
 		mywcs=pywcs.WCS(f[0].header)
 		return mywcs.wcs_pix2sky(np.array([posn]),0)[0][:3]
 
