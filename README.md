@@ -1,7 +1,7 @@
 # COLDz_calculate_LF
 Scripts to use the COLDz galaxy line candidates to constrain the CO Luminosity Function at z=2-3, using the ABC method.
 
-This code was developed as part of the COLDz project to measure the CO luminosity function at high redshift. See the project [website] (coldz.astro.cornell.edu) for more details, Pavesi et al. 2018b ([1808.04372](https://arxiv.org/abs/1808.04372)) and Riechers et al. 2018 ([1808.04371](https://arxiv.org/abs/1808.04371)) for reference. 
+This code was developed as part of the COLDz project to measure the CO luminosity function at high redshift. See the project [website](http://coldz.astro.cornell.edu) for more details, Pavesi et al. 2018b ([1808.04372](https://arxiv.org/abs/1808.04372)) and Riechers et al. 2018 ([1808.04371](https://arxiv.org/abs/1808.04371)) for reference. 
 
 See the other COLDz repos for additional code related to this project.
 This code uses the line candidates selected by MF3D (see repo), their measured line properties (see COLDz utilities) and well characterized statistical correction factors (see COLDz artificial sources repo) to constrain the Schechter distribution of the CO luminosity function, i.e. the gas mass function of galaxies.
