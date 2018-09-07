@@ -5,7 +5,7 @@ from matplotlib.ticker import MultipleLocator
 import matplotlib as mpl
 
 
-mpl.rcParams['font.size']=23  #normal is 12
+mpl.rcParams['font.size']=24  #normal is 12
 mpl.rcParams['lines.linewidth']=2  #normal is 1
 mpl.rcParams['axes.linewidth'] = 2
 
